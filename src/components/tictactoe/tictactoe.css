@@ -11,6 +11,10 @@
   gap: 1rem;
 }
 
+.tictactoe-container .board.game-over {
+  opacity: 0.5;
+}
+
 .tictactoe-container .board .cell {
   display: grid;
   align-items: center;
@@ -32,9 +36,15 @@
   background-color: #FFA9A9  !important;
 }
 
+.cell:not(.O):not(.X):hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.game-over .cell:hover,
 .cell.X:hover,
 .cell.O:hover {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
 }
 
 .tictactoe-container .reset-button {
@@ -50,4 +60,17 @@
 .tictactoe-container .reset-button:hover {
   cursor: pointer;
   background-color: #DDD;
+}
+
+.tictactoe-container .message {
+  margin: 20px 0 0 0;
+  font-size: 24px;
+}
+
+.tictactoe-container .message .O {
+  color: #FFA9A9;
+}
+
+.tictactoe-container .message .X {
+  color: #A9C9FF;
 }
