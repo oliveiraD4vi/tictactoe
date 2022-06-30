@@ -1,0 +1,53 @@
+.tictactoe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tictactoe-container .board {
+  display: grid;
+  grid-template-columns: repeat(3, 240px);
+  grid-template-rows: repeat(3, 200px);
+  gap: 1rem;
+}
+
+.tictactoe-container .board .cell {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+  border-radius: 5px;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tictactoe-container .board .cell.X {
+  color: #FFF;
+  background-color: #A9C9FF !important;
+}
+
+.tictactoe-container .board .cell.O {
+  color: #FFF;
+  background-color: #FFA9A9  !important;
+}
+
+.cell.X:hover,
+.cell.O:hover {
+  cursor: not-allowed;
+}
+
+.tictactoe-container .reset-button {
+  padding: 10px 35px;
+  color: #FFF;
+  background-color: #CCC;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 20px 0 0 0;
+  transition: all 200ms ease-in-out;
+}
+
+.tictactoe-container .reset-button:hover {
+  cursor: pointer;
+  background-color: #DDD;
+}
