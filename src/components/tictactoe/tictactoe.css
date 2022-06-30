@@ -77,16 +77,16 @@
 
 @media (max-width: 1500px) {
   .tictactoe-container .board {
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: repeat(3, 160px);
+    grid-template-columns: repeat(3, 160px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 0.5rem;
   }
 }
 
 @media (max-width: 1200px) {
   .tictactoe-container .board {
-    grid-template-columns: repeat(3, 160px);
-    grid-template-rows: repeat(3, 120px);
-    gap: 0.8rem;
+    grid-template-columns: repeat(3, 140px);
+    grid-template-rows: repeat(3, 110px);
   }
 
   .cell:not(.O):not(.X):hover {
@@ -98,7 +98,6 @@
   .tictactoe-container .board {
     grid-template-columns: repeat(3, 120px);
     grid-template-rows: repeat(3, 90px);
-    gap: 0.5rem;
   }
 
   .tictactoe-container .board .cell {
