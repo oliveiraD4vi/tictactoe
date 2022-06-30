@@ -9,6 +9,7 @@ const TicTacToe = () => {
   const [winner, setWinner] = useState(null);
   const [draw, setDraw] =useState(false);
 
+  // eslint-disable-next-line
   useEffect(() => check(), [board]);
 
   const onReset = () => {
