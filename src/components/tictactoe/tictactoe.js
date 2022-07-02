@@ -54,7 +54,7 @@ const TicTacToe = () => {
 
   return (
     <div className="tictactoe-container">
-      <div className={`board ${winner ? 'game-over' : null}`}>
+      <div className={`board ${winner || draw ? 'game-over' : null}`}>
         {board.map((item, index) => (
           <div
             key={index}

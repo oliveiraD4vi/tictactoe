@@ -12,7 +12,7 @@
 }
 
 .tictactoe-container .board.game-over {
-  opacity: 0.5;
+  opacity: 0.5 !important;
 }
 
 .tictactoe-container .board .cell {
