@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { canPlay, computerMove, emptyBoard, other, outcome, play, turnOf, type Difficulty, type Mark } from "../game";
+import { useI18n } from "../i18n";
 import { Board, MarkIcon } from "./Board";
 
 interface Props {
@@ -10,9 +11,8 @@ interface Props {
   onExit: () => void;
 }
 
-const DIFFICULTY_LABEL: Record<Difficulty, string> = { facil: "fácil", medio: "médio", impossivel: "impossível" };
-
 export function OfflineGame({ mode, difficulty, name, onExit }: Props) {
+  const { t } = useI18n();
   const [board, setBoard] = useState(emptyBoard);
   const [starter, setStarter] = useState<Mark>("X");
   const [score, setScore] = useState({ X: 0, O: 0, draws: 0 });
@@ -21,7 +21,7 @@ export function OfflineGame({ mode, difficulty, name, onExit }: Props) {
   const turn = turnOf(board, starter);
   const botTurn = mode === "bot" && turn === "O" && !over;
 
-  const names: Record<Mark, string> = mode === "bot" ? { X: name || "Você", O: "Computador" } : { X: "Jogador X", O: "Jogador O" };
+  const names: Record<Mark, string> = mode === "bot" ? { X: name || t.you, O: t.computer } : { X: t.player("X"), O: t.player("O") };
 
   function move(index: number) {
     if (!canPlay(board, index)) return;
@@ -45,14 +45,14 @@ export function OfflineGame({ mode, difficulty, name, onExit }: Props) {
   }
 
   let status: string;
-  if (result.winner) status = mode === "bot" ? (result.winner === "X" ? "Você venceu!" : "O computador venceu") : `${names[result.winner]} venceu!`;
-  else if (result.draw) status = "Deu velha!";
-  else status = mode === "bot" ? (turn === "X" ? "Sua vez" : "O computador está pensando…") : `Vez de ${names[turn]}`;
+  if (result.winner) status = mode === "bot" ? (result.winner === "X" ? t.youWon : t.computerWon) : t.someoneWon(names[result.winner]);
+  else if (result.draw) status = t.draw;
+  else status = mode === "bot" ? (turn === "X" ? t.yourTurn : t.thinking) : t.turnOf(names[turn]);
 
   return (
     <div className="game">
       <header className="game-head">
-        <p className="eyebrow">{mode === "bot" ? `Contra o computador · ${DIFFICULTY_LABEL[difficulty]}` : "No mesmo aparelho"}</p>
+        <p className="eyebrow">{mode === "bot" ? t.vsComputer(t.difficulties[difficulty]) : t.sameDevice}</p>
         <Scoreboard names={names} score={score} turn={over ? null : turn} />
       </header>
 
@@ -65,14 +65,14 @@ export function OfflineGame({ mode, difficulty, name, onExit }: Props) {
       <div className="actions">
         {over && (
           <button type="button" className="btn btn-primary" onClick={rematch}>
-            Jogar de novo
+            {t.playAgain}
           </button>
         )}
         <button type="button" className="btn" onClick={onExit}>
-          Voltar
+          {t.back}
         </button>
       </div>
-      {over && <p className="muted small center-text">Na próxima, começa {names[other(starter)]}.</p>}
+      {over && <p className="muted small center-text">{t.nextStarts(names[other(starter)])}</p>}
     </div>
   );
 }
@@ -88,6 +88,7 @@ export function Scoreboard({
   turn: Mark | null;
   online?: Partial<Record<Mark, boolean>>;
 }) {
+  const { t } = useI18n();
   return (
     <dl className="scoreboard">
       {(["X", "O"] as Mark[]).map((m) => (
@@ -95,13 +96,13 @@ export function Scoreboard({
           <dt>
             <MarkIcon mark={m} />
             <span className="score-name">{names[m]}</span>
-            {online && online[m] === false && <span className="tag">fora</span>}
+            {online && online[m] === false && <span className="tag">{t.away}</span>}
           </dt>
           <dd>{score[m]}</dd>
         </div>
       ))}
       <div className="score-draws">
-        <dt>Velhas</dt>
+        <dt>{t.draws}</dt>
         <dd>{score.draws}</dd>
       </div>
     </dl>

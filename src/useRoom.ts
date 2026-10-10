@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ClientMessage, RoomView, ServerMessage } from "./protocol";
+import type { ClientMessage, ErrorCode, RoomView, ServerMessage } from "./protocol";
 import { sessionId } from "./session";
 
 export type Status = "connecting" | "open" | "reconnecting";
@@ -15,7 +15,7 @@ interface Options {
 export function useRoom({ name, initial, onLeft }: Options) {
   const [room, setRoom] = useState<RoomView | null>(null);
   const [status, setStatus] = useState<Status>("connecting");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ErrorCode | null>(null);
   const socket = useRef<WebSocket | null>(null);
   const started = useRef(false);
   const code = useRef<string | null>(null);
@@ -48,7 +48,7 @@ export function useRoom({ name, initial, onLeft }: Options) {
           setRoom(message.room);
           setError(null);
         } else if (message.type === "error") {
-          setError(message.message);
+          setError(message.code);
         } else if (message.type === "left") {
           onLeftRef.current();
         }

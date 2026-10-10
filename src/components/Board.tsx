@@ -1,4 +1,5 @@
 import { outcome, type Board as BoardState, type Mark } from "../game";
+import { useI18n } from "../i18n";
 
 interface Props {
   board: BoardState;
@@ -9,12 +10,11 @@ interface Props {
   onPlay: (index: number) => void;
 }
 
-const POSITIONS = ["canto superior esquerdo", "topo", "canto superior direito", "esquerda", "centro", "direita", "canto inferior esquerdo", "base", "canto inferior direito"];
-
 export function Board({ board, canPlay, turn, onPlay }: Props) {
+  const { t } = useI18n();
   const { line } = outcome(board);
   return (
-    <div className="board" role="grid" aria-label="Tabuleiro" data-over={line !== null}>
+    <div className="board" role="grid" aria-label={t.board} data-over={line !== null}>
       {board.map((cell, i) => (
         <button
           key={i}
@@ -25,7 +25,7 @@ export function Board({ board, canPlay, turn, onPlay }: Props) {
           data-win={line?.includes(i) ?? false}
           disabled={!canPlay || cell !== null}
           onClick={() => onPlay(i)}
-          aria-label={`${POSITIONS[i]}: ${cell ?? "vazio"}`}
+          aria-label={`${t.cells[i]}: ${cell ?? t.empty}`}
         >
           {cell && <MarkIcon mark={cell} />}
         </button>

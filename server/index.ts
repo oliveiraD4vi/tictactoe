@@ -122,7 +122,7 @@ const cleanName = (value: unknown) =>
 function handle(socket: WebSocket, state: { session: Session | null }, message: ClientMessage) {
   if (message.type === "hello") {
     if (typeof message.session !== "string" || !/^[A-Za-z0-9-]{8,64}$/.test(message.session)) {
-      return send(socket, { type: "error", message: "Sessão inválida." });
+      return send(socket, { type: "error", code: "badSession" });
     }
     const session = sessions.get(message.session) ?? { id: message.session, name: "", sockets: new Set(), room: null, lastSeen: Date.now() };
     sessions.set(session.id, session);
@@ -136,7 +136,7 @@ function handle(socket: WebSocket, state: { session: Session | null }, message: 
   }
 
   const session = state.session;
-  if (!session) return send(socket, { type: "error", message: "Conexão ainda não identificada." });
+  if (!session) return send(socket, { type: "error", code: "notReady" });
   const room = session.room ? rooms.get(session.room) : undefined;
 
   switch (message.type) {
@@ -156,7 +156,7 @@ function handle(socket: WebSocket, state: { session: Session | null }, message: 
     }
     case "join": {
       const target = rooms.get(normalizeCode(String(message.code ?? "")));
-      if (!target) return send(socket, { type: "error", message: "Sala não encontrada. Confira o código." });
+      if (!target) return send(socket, { type: "error", code: "roomNotFound" });
       return joinRoom(session, target);
     }
     case "move": {

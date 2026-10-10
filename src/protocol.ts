@@ -33,7 +33,9 @@ export type ServerMessage =
   | { type: "ready" }
   | { type: "room"; room: RoomView }
   | { type: "left" }
-  | { type: "error"; message: string };
+  | { type: "error"; code: ErrorCode };
+
+export type ErrorCode = "roomNotFound" | "badSession" | "notReady";
 
 export const CODE_LENGTH = 4;
 /** Sem letras e números que se confundem (O/0, I/1). */

@@ -1,6 +1,6 @@
-# Jogo da velha
+# Jogo da velha · Tic-tac-toe
 
-Jogo da velha com três modos:
+Jogo da velha em **português e inglês** (`?lang=pt` ou `?lang=en` na URL), com três modos:
 
 - **No mesmo aparelho:** dois jogadores, um tabuleiro, placar da sessão e início alternado.
 - **Contra o computador:** fácil, médio ou impossível (minimax: no impossível, o melhor que dá

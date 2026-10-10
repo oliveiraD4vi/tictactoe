@@ -32,7 +32,10 @@ button:disabled { cursor: not-allowed; }
 .page { min-height: 100vh; display: flex; flex-direction: column; }
 .top, .main, .foot { width: 100%; max-width: 960px; margin-inline: auto; padding-inline: 16px; }
 @media (min-width: 720px) { .top, .main, .foot { padding-inline: 28px; } }
-.top { padding-block: 16px; }
+.top { padding-block: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.lang { display: inline-flex; border: var(--border); border-radius: 999px; overflow: hidden; background: var(--paper); }
+.lang button { border: 0; background: none; padding: 6px 12px; font-weight: 800; font-size: 0.85rem; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
 .brand { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; font-weight: 800; font-size: 1.1rem; }
 .logo { width: 30px; height: 30px; border-radius: 9px; border: var(--border); background: var(--sun); display: grid; place-items: center; font-weight: 800; }
 .main { flex: 1; padding-block: 12px 48px; }
@@ -58,6 +61,7 @@ button:disabled { cursor: not-allowed; }
 @media (min-width: 860px) { .home { grid-template-columns: 0.85fr 1.15fr; align-items: start; gap: 36px; } }
 .intro h1 { font-size: clamp(2.4rem, 7vw, 3.8rem); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
 .lead { color: var(--ink-2); font-size: 1.08rem; margin: 14px 0 22px; }
+.intro .mode-online { margin-top: 18px; }
 .name-field input, .join input { width: 100%; min-height: 48px; padding: 0 16px; border-radius: 14px; border: var(--border); background: var(--paper); font-size: 1.05rem; }
 .modes { display: grid; gap: 14px; }
 .mode {
